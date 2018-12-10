@@ -1,17 +1,46 @@
 class PostsController < ApplicationController
   def index
-    # Return all `Post`
+    @post = Post.all
+    if params[:search]
+        @post = Post.search(params[:search])
+    else
+        @post = Post.all
+    end
+
   end
 
   def new
-    # Return view to create a new Post
+	  @post = Post.new
   end
 
+  def show
+          @post = Post.find(params[:id])
+  end
+
+
+
   def create
-    # Add a new `Post` to the database
+    @post = Post.new(post_params)
+          if @post.save
+                redirect_to @post
+          else
+                  render 'new'
+          end
+
   end
 
   def destroy
-    # Remove a `Post` from the database
+    @post = Post.find(params[:id])
+    @post.destroy
+
+    redirect_to posts_path
+
   end
+
+  private
+  def post_params
+      params.require(:post).permit(:title, :body)
+  end
+
+  
 end

@@ -1,1 +1,33 @@
-<!-- View for showing all `Post` -->
+<h1><strong>Posts</strong></h1>
+
+<%= form_tag(posts_path, :method => "get", id: "search-form") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search Articles" %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<br><br>
+<%= link_to 'New Post', new_post_path %>
+<br><br>
+
+<% if @post.blank? %>
+  <h4>There are no posts containing the term <%= params[:search] %>.</h4>
+<% end %>
+
+
+<table>
+  <% unless @post.blank? %>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th></th>
+  </tr>
+  <% end %>
+ 
+  <% @post.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td>  |  <%= post.body.truncate(25) %></td>
+      <td>  |  <%= link_to "Comments(#{post.comments.count})", post_path(post) %></td>
+    </tr>
+  <% end %>
+</table>
