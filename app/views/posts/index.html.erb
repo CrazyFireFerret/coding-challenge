@@ -1,9 +1,12 @@
+<p>
 <h1><strong>Posts</strong></h1>
 
 <%= form_tag(posts_path, :method => "get", id: "search-form") do %>
     <%= text_field_tag :search, params[:search], placeholder: "Search Articles" %>
     <%= submit_tag "Search", :name => nil %>
 <% end %>
+</p>
+
 
 <br><br>
 <%= link_to 'New Post', new_post_path %>
